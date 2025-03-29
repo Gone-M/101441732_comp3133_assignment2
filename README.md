@@ -67,7 +67,7 @@ This project implements a full-stack Employee Management System with Angular fro
 ### Local Development Setup
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/101441732_comp3133_assignment2.git
+git clone https://github.com/Gone-M/101441732_comp3133_assignment2.git
 cd 101441732_comp3133_assignment2
 ```
 
