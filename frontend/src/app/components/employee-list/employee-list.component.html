@@ -1,0 +1,100 @@
+<div class="employee-list-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Employee List</mat-card-title>
+        <div class="header-actions">
+          <button mat-raised-button color="primary" routerLink="/employees/add">
+            Add Employee
+          </button>
+          <button mat-raised-button color="warn" (click)="logout()">
+            Logout
+          </button>
+        </div>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="search-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Search Criteria</mat-label>
+            <mat-select [(ngModel)]="searchCriteria">
+              <mat-option value="department">Department</mat-option>
+              <mat-option value="position">Position</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Search Value</mat-label>
+            <input matInput [(ngModel)]="searchValue">
+          </mat-form-field>
+          
+          <button mat-raised-button color="accent" (click)="search()">
+            Search
+          </button>
+          
+          <button mat-raised-button (click)="resetSearch()">
+            Reset
+          </button>
+        </div>
+        
+        <div class="loading-spinner" *ngIf="loading">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        
+        <table mat-table [dataSource]="employees" class="mat-elevation-z8" *ngIf="!loading">
+          <ng-container matColumnDef="profilePicture">
+            <th mat-header-cell *matHeaderCellDef>Photo</th>
+            <td mat-cell *matCellDef="let employee">
+              <img [src]="employee.profilePicture || 'assets/default-profile.png'" alt="Profile" class="profile-img">
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef>First Name</th>
+            <td mat-cell *matCellDef="let employee">{{ employee.firstName }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef>Last Name</th>
+            <td mat-cell *matCellDef="let employee">{{ employee.lastName }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let employee">{{ employee.email }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>Position</th>
+            <td mat-cell *matCellDef="let employee">{{ employee.position }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let employee">{{ employee.department }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let employee">
+              <button mat-icon-button color="primary" (click)="viewDetails(employee.id)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="editEmployee(employee.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(employee.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+        <div *ngIf="employees.length === 0 && !loading" class="no-data">
+          No employees found.
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

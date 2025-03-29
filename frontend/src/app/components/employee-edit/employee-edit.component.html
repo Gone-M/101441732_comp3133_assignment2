@@ -1,0 +1,108 @@
+<div class="employee-edit-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit Employee</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="loading-spinner" *ngIf="initialLoading">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        
+        <form *ngIf="!initialLoading" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
+              <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required>
+              <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
+                Last name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required>
+            <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+  
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender" required>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('gender')?.hasError('required')">
+                Gender is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Position</mat-label>
+              <input matInput formControlName="position" required>
+              <mat-error *ngIf="employeeForm.get('position')?.hasError('required')">
+                Position is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Department</mat-label>
+              <input matInput formControlName="department" required>
+              <mat-error *ngIf="employeeForm.get('department')?.hasError('required')">
+                Department is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Salary</mat-label>
+              <input matInput type="number" formControlName="salary" required>
+              <mat-error *ngIf="employeeForm.get('salary')?.hasError('required')">
+                Salary is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div class="profile-picture-container">
+            <div class="current-profile" *ngIf="currentProfilePicture && !imagePreview">
+              <img [src]="currentProfilePicture" alt="Current Profile">
+              <p>Current Profile Picture</p>
+            </div>
+            <div class="profile-preview" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="New Profile Preview">
+              <p>New Profile Picture</p>
+            </div>
+            <button type="button" mat-raised-button (click)="fileInput.click()">
+              Change Profile Picture
+            </button>
+            <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+          </div>
+  
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="employeeForm.invalid || submitLoading">
+              <mat-spinner diameter="20" *ngIf="submitLoading"></mat-spinner>
+              <span *ngIf="!submitLoading">Update Employee</span>
+            </button>
+            <button mat-raised-button type="button" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>

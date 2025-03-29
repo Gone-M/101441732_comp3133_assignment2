@@ -1,0 +1,30 @@
+.employee-details {
+    display: flex;
+    gap: 24px;
+    padding: 8px;
+  }
+  
+  .profile-picture img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .details-content {
+    flex: 1;
+  }
+  
+  .detail-row {
+    margin-bottom: 12px;
+  }
+  
+  .label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+    margin-right: 8px;
+  }
+  
+  .value {
+    color: rgba(0, 0, 0, 0.87);
+  }
